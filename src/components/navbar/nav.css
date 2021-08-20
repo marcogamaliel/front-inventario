@@ -1,0 +1,10 @@
+nav a.btn {
+  border: 1px solid white;
+  box-shadow: none;
+  border-radius: 10px;
+}
+/* 
+nav a.btn-large:hover {
+  background-color: rgba(100, 40, 40, 0.3);
+  box-shadow: none;
+} */
