@@ -7,10 +7,30 @@ export function ProductForm(props) {
     register, errors, handleSubmit, setValue,
   } = useForm()
 
+  if (props.product) {
+    setValue('name', props.product.name)
+    setValue('serialNumber', props.product.serialNumber)
+    setValue('acquisitionDate', props.product.acquisitionDate)
+    setValue('supplier', props.product.supplier)
+    setValue('invoice', props.product.invoice)
+    setValue('warrantyExpirationDate', props.product.warrantyExpirationDate)
+    setValue('value', props.product.value?.amount)
+    setValue('assignmentDate', props.product.assignmentDate)
+  }
+
   const { onSubmit, product, cancelUrl, acceptLabel } = props
 
+  const onSubmitWrapper = (productUploaded) => {
+    const fixProduct = {
+      ...(product?.id && { id: product.id }),
+      ...productUploaded,
+      value: productUploaded.value ? { amount: productUploaded.value, currency: 'CLP' } : product?.value,
+    }
+    onSubmit(fixProduct)
+  }
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmitWrapper)}>
       <div className="row">
         <div className="input-field col m4 s12">
           <label htmlFor="name" className={product?.name && 'active'}>Nombre Producto</label>
@@ -91,6 +111,7 @@ export function ProductForm(props) {
             name="invoice"
             type="text"
             className={errors?.invoice ? 'invalid' : 'valid'}
+            {...register('invoice')}
           />
           <span className="brown-text">
             {errors?.invoice?.message}
@@ -106,6 +127,7 @@ export function ProductForm(props) {
             name="warrantyExpirationDate"
             type="text"
             className={errors?.warrantyExpirationDate ? 'invalid' : 'valid'}
+            {...register('warrantyExpirationDate')}
           />
           <span className="brown-text">
             {errors?.warrantyExpirationDate?.message}
@@ -121,6 +143,7 @@ export function ProductForm(props) {
             name="value"
             type="text"
             className={errors?.value ? 'invalid' : 'valid'}
+            {...register('value')}
           />
           <span className="brown-text">
             {errors?.value?.message}
@@ -130,15 +153,16 @@ export function ProductForm(props) {
 
       <div className="row">
         <div className="input-field col m4 s12">
-          <label htmlFor="assigmentDate" className={product?.assigmentDate && 'active'}>Fecha de assignación</label>
+          <label htmlFor="assignmentDate" className={product?.assignmentDate && 'active'}>Fecha de assignación</label>
           <input
-            id="assigmentDate"
-            name="assigmentDate"
+            id="assignmentDate"
+            name="assignmentDate"
             type="text"
-            className={errors?.assigmentDate ? 'invalid' : 'valid'}
+            className={errors?.assignmentDate ? 'invalid' : 'valid'}
+            {...register('assignmentDate')}
           />
           <span className="brown-text">
-            {errors?.assigmentDate?.message}
+            {errors?.assignmentDate?.message}
           </span>
         </div>
       </div>

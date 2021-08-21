@@ -4,7 +4,7 @@ const data = [
     tag: 'laptop', // select
     name: 'mac intel 8GB',
     serialNumber: '1259018724098',
-    acquisitonDate: '2020-12-01',
+    acquisitionDate: '2020-12-01',
     supplier: 'mac-online',
     invoice: '1255',
     warrantyExpirationDate: '2021-12-01',
@@ -25,7 +25,7 @@ const data = [
     tag: 'laptop',
     name: 'mac intel 8GB',
     serialNumber: '1259018724098',
-    acquisitonDate: '2020-12-01',
+    acquisitionDate: '2020-12-01',
     supplier: 'mac-online',
     invoice: '1255',
     warrantyExpirationDate: '2021-12-01',
@@ -45,13 +45,25 @@ const data = [
 
 const ProductRepository = {
   getAll: async () => {
+    const result = data
     return new Promise((resolve) => {
-      setTimeout(() => resolve(data), 500)
+      setTimeout(() => resolve(result), 500)
     })
   },
   save: async (product) => {
-    if (product.id) { data.push(product) }
+    if (product.id) {
+      data.splice(+product.id - 1, 1, product)
+    }
     else { data.push({ ...product, id: (data.length + 1).toString() }) }
+    return new Promise((resolve) => {
+      setTimeout(() => resolve(0), 500)
+    })
+  },
+  getById: async (id) => {
+    const result = data.find(item => item.id === id)
+    return new Promise((resolve) => {
+      setTimeout(() => resolve(result), 500)
+    })
   }
 }
 

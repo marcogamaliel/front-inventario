@@ -17,7 +17,7 @@ export function ListarProductosView() {
       .then((products) => {
         const data = products.map(product => {
           const { id, name, tag, serialNumber, acquisitionDate, supplier, invoice, warrantyExpirationDate, value, user, assignmentDate, condition, state } = product
-          return [id, name, tag, serialNumber, acquisitionDate, supplier, invoice, warrantyExpirationDate, value?.amount, user?.name, assignmentDate, condition, state]
+          return [id, <Link to={`/editar-producto/${id}`}>{name}</Link>, tag, serialNumber, acquisitionDate, supplier, invoice, warrantyExpirationDate, value?.amount, user?.name, assignmentDate, condition, state]
         })
         setData(data)
         setLoader(loader - 1)
