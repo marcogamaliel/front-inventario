@@ -51,7 +51,7 @@ const ProductRepository = {
   },
   save: async (product) => {
     if (product.id) { data.push(product) }
-    else { data.push({ ...product, id: data.length.toString() }) }
+    else { data.push({ ...product, id: (data.length + 1).toString() }) }
   }
 }
 

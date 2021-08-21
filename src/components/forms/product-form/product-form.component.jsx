@@ -13,24 +13,6 @@ export function ProductForm(props) {
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="row">
         <div className="input-field col m4 s12">
-          <label htmlFor="id" className={product?.id && 'active'}>Id</label>
-          <input
-            id="id"
-            name="id"
-            type="text"
-            className={errors?.id ? 'invalid' : 'valid'}
-            {...register('id', {
-              required: { value: true, message: 'es obligatorio' },
-            })}
-          />
-          <span className="brown-text">
-            {errors?.id?.message}
-          </span>
-        </div>
-      </div>
-
-      <div className="row">
-        <div className="input-field col m4 s12">
           <label htmlFor="name" className={product?.name && 'active'}>Nombre Producto</label>
           <input
             id="name"
@@ -109,9 +91,6 @@ export function ProductForm(props) {
             name="invoice"
             type="text"
             className={errors?.invoice ? 'invalid' : 'valid'}
-            {...register('invoice', {
-              required: { value: true, message: 'es obligatorio' },
-            })}
           />
           <span className="brown-text">
             {errors?.invoice?.message}
@@ -127,9 +106,6 @@ export function ProductForm(props) {
             name="warrantyExpirationDate"
             type="text"
             className={errors?.warrantyExpirationDate ? 'invalid' : 'valid'}
-            {...register('warrantyExpirationDate', {
-              required: { value: true, message: 'es obligatorio' },
-            })}
           />
           <span className="brown-text">
             {errors?.warrantyExpirationDate?.message}
@@ -145,9 +121,6 @@ export function ProductForm(props) {
             name="value"
             type="text"
             className={errors?.value ? 'invalid' : 'valid'}
-            {...register('value', {
-              required: { value: true, message: 'es obligatorio' },
-            })}
           />
           <span className="brown-text">
             {errors?.value?.message}
@@ -163,9 +136,6 @@ export function ProductForm(props) {
             name="assigmentDate"
             type="text"
             className={errors?.assigmentDate ? 'invalid' : 'valid'}
-            {...register('assigmentDate', {
-              required: { value: true, message: 'es obligatorio' },
-            })}
           />
           <span className="brown-text">
             {errors?.assigmentDate?.message}
