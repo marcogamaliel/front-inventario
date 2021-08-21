@@ -33,7 +33,7 @@ export function EditarProductoView() {
       <Breadcrumbs pages={pages} />
       <Loader isLoading={loader > 0} />
       <h1>Editar Producto</h1>
-      <ProductForm onSubmit={onSubmit} acceptLabel={'Editar Producto'} product={product} />
+      <ProductForm onSubmit={onSubmit} acceptLabel={'Editar Producto'} product={product} cancelUrl="/lista-productos" />
     </div>
   )
 }

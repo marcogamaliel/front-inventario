@@ -1,16 +1,18 @@
 const data = [
   {
-    name: 'Laptops',
+    id: '1',
+    name: 'Nuevo',
   },
   {
-    name: 'Periféricos',
+    id: '2',
+    name: 'Usado previamente',
   },
 ]
 
-const TagRepository = {
+const ConditionRepository = {
   getAll: async () => {
     return new Promise((resolve) => setTimeout(() => resolve(data), 500))
   }
 }
 
-export default TagRepository
+export default ConditionRepository

@@ -1,16 +1,18 @@
 const data = [
   {
-    name: 'Marco',
+    id: '1',
+    name: 'Laptops',
   },
   {
-    name: 'Alejandro',
+    id: '2',
+    name: 'Periféricos',
   },
 ]
 
-const UserRepository = {
+const TagRepository = {
   getAll: async () => {
     return new Promise((resolve) => setTimeout(() => resolve(data), 500))
   }
 }
 
-export default UserRepository
+export default TagRepository

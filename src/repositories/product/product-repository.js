@@ -1,7 +1,7 @@
 const data = [
   {
     id: '1',
-    tag: 'laptop', // select
+    tag: 'Laptops', // select
     name: 'mac intel 8GB',
     serialNumber: '1259018724098',
     acquisitionDate: '2020-12-01',

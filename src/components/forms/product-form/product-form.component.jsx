@@ -1,11 +1,19 @@
 import { useForm } from "react-hook-form"
 import { Link } from 'react-router-dom'
 import M from 'materialize-css'
+import { useEffect, useState } from "react"
+import TagRepository from "../../../repositories/tag/tag.repository"
+import UserRepository from "../../../repositories/user/user.repository"
+import ConditionRepository from "../../../repositories/condition/condition.repository"
 
 export function ProductForm(props) {
   const {
     register, errors, handleSubmit, setValue,
   } = useForm()
+
+  const [tags, setTags] = useState([])
+  const [users, setUsers] = useState([])
+  const [conditions, setConditions] = useState([])
 
   if (props.product) {
     setValue('name', props.product.name)
@@ -18,24 +26,79 @@ export function ProductForm(props) {
     setValue('assignmentDate', props.product.assignmentDate)
   }
 
+  useEffect(() => {
+    TagRepository.getAll().then((tags) => {
+      setTags(tags)
+      M.FormSelect.init(document.querySelectorAll('#product-form-tags'))
+      if (props.product?.tag) {
+        const selectedTag = tags.find(t => t.name === props.product.tag)?.id ?? 'no'
+        setValue('tags', selectedTag)
+      }
+    })
+    UserRepository.getAll().then((users) => {
+      setUsers(users)
+      M.FormSelect.init(document.querySelectorAll('#product-form-users'))
+      if (props.product?.user?.id) {
+        const selectedUsers = tags.find(u => u.id === props.product.user.id)?.id ?? 'no'
+        setValue('users', selectedUsers)
+      }
+    })
+    ConditionRepository.getAll().then((conditions) => {
+      setConditions(conditions)
+      M.FormSelect.init(document.querySelectorAll('#product-form-conditions'))
+      if (props.product?.condition) {
+        const selectedCondition = conditions.find(c => c.name === props.product.condition)?.id ?? 'no'
+        setValue('conditions', selectedCondition)
+      }
+    })
+  })
+
   const { onSubmit, product, cancelUrl, acceptLabel } = props
 
   const onSubmitWrapper = (productUploaded) => {
+    console.log(productUploaded)
     const fixProduct = {
       ...(product?.id && { id: product.id }),
       ...productUploaded,
       value: productUploaded.value ? { amount: productUploaded.value, currency: 'CLP' } : product?.value,
+      tag: tags.find(t => t.id === productUploaded.tags)?.name,
+      user: users.find(u => u.id === productUploaded.users),
+      condition: conditions.find(c => c.id === productUploaded.conditions)?.name
     }
     onSubmit(fixProduct)
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmitWrapper)}>
+
+      <div className="row">
+        <div className="input-field col m6 s12">
+          <label className="active">Categoría</label>
+          <select
+            name="tags"
+            id="product-form-tags"
+            className={errors?.tags ? 'invalid' : 'valid'}
+            {...register("tags", {
+              required: { value: true, message: 'Se debe seleccionar la categoría' },
+              validate: (value) => value !== 'no' || 'Se debe seleccionar una categoría',
+            })}
+          >
+            <option value="no">Selecciona la categoría</option>
+            {tags.map((tag) => (
+              <option value={tag.id} key={`tag-${tag.id}`}>{tag.name}</option>
+            ))}
+          </select>
+          <span className="brown-text">
+            {errors?.tags?.message}
+          </span>
+        </div>
+      </div>
+
       <div className="row">
         <div className="input-field col m4 s12">
           <label htmlFor="name" className={product?.name && 'active'}>Nombre Producto</label>
           <input
-            id="name"
+            id="product-form-name"
             name="name"
             type="text"
             className={errors?.name ? 'invalid' : 'valid'}
@@ -147,6 +210,56 @@ export function ProductForm(props) {
           />
           <span className="brown-text">
             {errors?.value?.message}
+          </span>
+        </div>
+      </div>
+
+      <div className="row">
+        <div className="input-field col m6 s12">
+          <label className="active">Usuario</label>
+          <select
+            name="users"
+            id="product-form-users"
+            className={errors?.users ? 'invalid' : 'valid'}
+            {...register("users", {
+              required: { value: true, message: 'Se debe seleccionar la categoría' },
+              validate: (value) => value !== 'no' || 'Se debe seleccionar una categoría',
+            })}
+          >
+            <option value="no">Selecciona el usuario</option>
+            {users.map((user) => (
+              <option value={user.id} key={`user-${user.id}`}>
+                {`${user.firstName}${user.lastName ? ` ${user.lastName}` : ''}`}
+              </option>
+            ))}
+          </select>
+          <span className="brown-text">
+            {errors?.users?.message}
+          </span>
+        </div>
+      </div>
+
+      <div className="row">
+        <div className="input-field col m6 s12">
+          <label className="active">Condición</label>
+          <select
+            name="conditions"
+            id="product-form-conditions"
+            className={errors?.conditions ? 'invalid' : 'valid'}
+            {...register("conditions", {
+              required: { value: true, message: 'Se debe seleccionar la categoría' },
+              validate: (value) => value !== 'no' || 'Se debe seleccionar una categoría',
+            })}
+          >
+            <option value="no">Selecciona la condición</option>
+            {conditions.map((condition) => (
+              <option value={condition.id} key={`condition-${condition.id}`}>
+                {condition.name}
+              </option>
+            ))}
+          </select>
+          <span className="brown-text">
+            {errors?.conditions?.message}
           </span>
         </div>
       </div>
