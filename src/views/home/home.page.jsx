@@ -14,8 +14,9 @@ export default function HomePage() {
       </h1>
       <h4>Por el momento puedes:</h4>
       <ul className="collection">
-        <Link to="/lista-productos" className="collection-item">Listar productos</Link>
+        <Link to="/lista-productos" className="collection-item">Lista productos</Link>
         <Link to="/crear-producto" className="collection-item">Crear producto</Link>
+        <Link to="/lista-usuarios" className="collection-item">Lista usuarios</Link>
       </ul>
     </div>
   )
