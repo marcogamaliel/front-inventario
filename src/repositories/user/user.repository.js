@@ -29,6 +29,15 @@ const UserRepository = {
   getById: async (id) => {
     const result = data.find(u => u.id === id)
     return new Promise((resolve) => setTimeout(() => resolve(result), 500))
+  },
+  save: async (user) => {
+    if (user.id) {
+      data.splice(+user.id - 1, 1, user)
+    }
+    else { data.push({ ...user, id: (data.length + 1).toString() }) }
+    return new Promise((resolve) => {
+      setTimeout(() => resolve(0), 500)
+    })
   }
 }
 

@@ -17,6 +17,7 @@ export default function HomePage() {
         <Link to="/lista-productos" className="collection-item">Lista productos</Link>
         <Link to="/crear-producto" className="collection-item">Crear producto</Link>
         <Link to="/lista-usuarios" className="collection-item">Lista usuarios</Link>
+        <Link to="/crear-usuario" className="collection-item">Crear Usuario</Link>
       </ul>
     </div>
   )
