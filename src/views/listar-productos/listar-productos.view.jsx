@@ -1,41 +1,37 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import DoctorLevelRepository from '../../repositories/doctor-level/doctor-level.repository'
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs.component'
+import { Link } from 'react-router-dom'
 import Loader from '../../components/loader/loader.component'
+import ProductRepository from '../../repositories/product/product-repository'
+import Table from '../../components/table/table.component';
 
-export default function DoctorLevelMaintainerPage() {
-  const [doctorLevels, setDoctorLevels] = useState([])
+export function ListarProductosView() {
 
-  const pages = [{ url: '/home', name: 'Home' }]
+  const [data, setData] = useState([])
   const [loader, setLoader] = useState(0)
+  const headers = ['id', 'name', 'tag', 'serialNumber', 'acquisitionDate', 'supplier', 'invoice', 'warrantyExpirationDate', 'value', 'user', 'assignmentDate', 'condition', 'state']
 
   useEffect(() => {
     setLoader(1)
-    DoctorLevelRepository.getAll()
-      .then((doctorLevelsAux) => {
+    ProductRepository.getAll()
+      .then((products) => {
+        const data = products.map(product => {
+          const { id, name, tag, serialNumber, acquisitionDate, supplier, invoice, warrantyExpirationDate, value, user, assignmentDate, condition, state } = product
+          return [id, name, tag, serialNumber, acquisitionDate, supplier, invoice, warrantyExpirationDate, value.amount, user.name, assignmentDate, condition, state]
+        })
+        setData(data)
         setLoader(loader - 1)
-        setDoctorLevels(doctorLevelsAux)
       })
   }, [])
 
+  const pages = [{ url: '/home', name: 'Home' }]
   return (
     <div>
       <Breadcrumbs pages={pages} />
       <Loader isLoading={loader > 0} />
       <div className="container">
-        <h1>Mantenedor Escalafones</h1>
-        <div className="collection">
-          {doctorLevels.map((doctorLevel) => (
-            <Link
-              to={`/doctor-levels/${doctorLevel.id}`}
-              key={doctorLevel.id}
-              className="collection-item"
-            >
-              {doctorLevel.name}
-            </Link>
-          ))}
-        </div>
+        <h1>Lista de productos</h1>
+        <Table headers={headers} data={data}></Table>
       </div>
     </div>
   )

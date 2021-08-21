@@ -14,8 +14,8 @@ export default function HomePage() {
       </h1>
       <h4>Por el momento puedes:</h4>
       <ul className="collection">
-        <Link to="/doctors" className="collection-item">Crear o modificar los doctores.</Link>
-        <Link to="/doctor-Levels" className="collection-item">Administrar los escalafones.</Link>
+        <Link to="/lista-productos" className="collection-item">Listar productos</Link>
+        <Link to="/crear-producto" className="collection-item">Crear producto</Link>
       </ul>
     </div>
   )

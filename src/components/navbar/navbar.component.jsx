@@ -14,8 +14,8 @@ export default function Navbar() {
     <nav className="blue">
       <div className="nav-wrapper">
         <img
-          src="/logo-morapavic-blanco.png"
-          alt="Morapavic"
+          src="/logo-peanut-blanco.png"
+          alt="Inventario"
           style={{ height: '45px', margin: '11px 0 0 11px' }}
           className="brand-logo"
         />
