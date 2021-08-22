@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs.component'
 import { Link } from 'react-router-dom'
-import Loader from '../../components/loader/loader.component'
 import ProductRepository from '../../repositories/product/product-repository'
-import Table from '../../components/table/table.component';
+import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs.component'
+import Loader from '../../components/loader/loader.component'
+import Table from '../../components/table/table.component'
 
 export function ListaProductosView() {
   const pages = [{ url: '/home', name: 'Home' }]

@@ -64,6 +64,12 @@ const ProductRepository = {
     return new Promise((resolve) => {
       setTimeout(() => resolve(result), 500)
     })
+  },
+  getByUserId: (id) => {
+    const result = data.filter(item => item.user?.id === id)
+    return new Promise((resolve) => {
+      setTimeout(() => resolve(result), 500)
+    })
   }
 }
 
