@@ -26,6 +26,9 @@ export function VerProductoView() {
       <Breadcrumbs pages={pages} />
       <Loader isLoading={loader > 0} />
       <h1>Detalle Producto {product.name}</h1>
+
+      <a href="https://wa.me/56948452530/?text=hola">whatsapp</a>
+
       <ul>
         <li><b>Id: </b>{product.id}</li>
         <li><b>Nombre: </b>{product.name}</li>
