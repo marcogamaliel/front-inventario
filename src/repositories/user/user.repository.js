@@ -11,7 +11,7 @@ const data = [
     },
     roles: [
       {
-        id: '2',
+        key: 'user',
         name: 'Usuario'
       }
     ]

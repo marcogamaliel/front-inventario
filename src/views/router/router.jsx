@@ -8,6 +8,7 @@ import { EditarProductoView } from '../editar-producto/editar-producto.view'
 import { VerProductoView } from '../ver-producto/ver-producto.view'
 import { ListaUsuariosView } from '../lista-usuarios/lista-usuarios.view'
 import { CrearUsuarioView } from '../crear-usuario/crear-usuario.view'
+import { EditarUsuarioView } from '../editar-usuario/editar-usuario.view'
 import { VerUsuarioView } from '../ver-usuario/ver-usuario.view'
 
 export default function AppRouter() {
@@ -30,7 +31,7 @@ export default function AppRouter() {
 
         <Route path="/crear-usuario" component={CrearUsuarioView} />
 
-        <Route path="/editar-usuario/:id" component={EditarProductoView} />
+        <Route path="/editar-usuario/:id" component={EditarUsuarioView} />
 
         <Route path="/ver-usuario/:id" component={VerUsuarioView} />
 

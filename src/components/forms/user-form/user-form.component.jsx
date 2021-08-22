@@ -15,7 +15,7 @@ export function UserForm(props) {
 
   if (props.user) {
     setValue('firstName', props.user.firstName)
-    setValue('lastName', props.user.serialNumber)
+    setValue('lastName', props.user.lastName)
     setValue('dni', props.user.dni)
     setValue('nickName', props.user.nickName)
   }
@@ -25,16 +25,16 @@ export function UserForm(props) {
       setClients(clients)
       M.FormSelect.init(document.querySelectorAll('#user-form-clients'))
       if (props.user?.client) {
-        const selectedTag = clients.find(c => c.name === props.user.client)?.id ?? 'no'
-        setValue('clients', selectedTag)
+        const selectedClient = clients.find(c => c.id === props.user.client?.id)?.id ?? 'no'
+        setValue('clients', selectedClient)
       }
     })
     RoleRepository.getAll().then((roles) => {
       setRoles(roles)
       M.FormSelect.init(document.querySelectorAll('#user-form-roles'))
-      if (props.user?.roles?.key) {
-        const selectedUsers = clients.find(u => u.key === props.user.roles?.[0])?.key ?? 'no'
-        setValue('roles', selectedUsers)
+      if (props.user?.roles) {
+        const selectedRoles = roles.find(u => u.key === props.user.roles?.[0]?.key)?.key ?? 'no'
+        setValue('roles', selectedRoles)
       }
     })
   })
