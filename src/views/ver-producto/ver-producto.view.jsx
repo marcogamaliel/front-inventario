@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom'
 import Breadcrumbs from "../../components/breadcrumbs/breadcrumbs.component"
 import ProductRepository from "../../repositories/product/product-repository"
 import Loader from "../../components/loader/loader.component"
+import EventRepository from "../../repositories/event/event.repository"
+import { EventWidget } from "../../components/event-widget/event-widget.component"
 
 export function VerProductoView() {
   const { id } = useParams()
@@ -10,11 +12,16 @@ export function VerProductoView() {
 
   const [loader, setLoader] = useState(0)
   const [product, setProduct] = useState({})
+  const [events, setEvents] = useState([])
 
   useEffect(() => {
-    setLoader(1)
+    setLoader(2)
     ProductRepository.getById(id).then((product) => {
       setProduct(product)
+      setLoader(loader - 1)
+    })
+    EventRepository.getByProductId(id).then((events) => {
+      setEvents(events)
       setLoader(loader - 1)
     })
   }, [])
@@ -44,6 +51,7 @@ export function VerProductoView() {
         <li><b>Condición: </b>{product.condition?.name}</li>
         <li><b>Estado: </b>{product.state?.name}</li>
       </ul>
+      <EventWidget events={events}></EventWidget>
     </div>
   )
 }
