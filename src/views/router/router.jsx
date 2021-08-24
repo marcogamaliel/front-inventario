@@ -35,7 +35,7 @@ export default function AppRouter() {
 
         <Route path="/ver-usuario/:id" component={VerUsuarioView} />
 
-        <Route path="/" component={HomePage} />
+        <Route path="/" component={Login} />
       </Switch>
     </Router >
   )
