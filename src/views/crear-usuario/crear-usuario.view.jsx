@@ -21,8 +21,10 @@ export function CrearUsuarioView() {
   return (
     <div>
       <Breadcrumbs pages={pages} />
-      <h1>Crear Usuario</h1>
-      <UserForm onSubmit={onSubmit} acceptLabel={'Crear Usuario'} />
+      <div className="container">
+        <h1>Crear Usuario</h1>
+        <UserForm onSubmit={onSubmit} acceptLabel={'Crear Usuario'} />
+      </div>
     </div>
   )
 }

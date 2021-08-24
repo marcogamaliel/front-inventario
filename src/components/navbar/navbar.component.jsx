@@ -14,20 +14,12 @@ export default function Navbar() {
     <nav className="blue">
       <div className="nav-wrapper">
         <img
-          src="/logo-peanut-blanco.png"
+          src="/logo.png"
           alt="Inventario"
-          style={{ height: '45px', margin: '11px 0 0 11px' }}
+          style={{ height: '40px', margin: '11px 0 0 11px' }}
           className="brand-logo"
         />
         <a href="#top" data-target="nav-mobile" className="sidenav-trigger"><i className="material-icons">menu</i></a>
-        <ul id="nav-mobile" className="right hide-on-med-and-down">
-          <li>
-            <a href="/login" className="blue btn waves-effect waves-light">
-              <i className="material-icons right">logout</i>
-              Cerrar Sesión
-            </a>
-          </li>
-        </ul>
       </div>
     </nav>
   )

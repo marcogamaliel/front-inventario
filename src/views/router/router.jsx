@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Switch, BrowserRouter as Router } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import Login from '../login/login.page'
 import HomePage from '../home/home.page'
 import { ListaProductosView } from '../lista-productos/lista-productos.view'
@@ -11,32 +11,31 @@ import { CrearUsuarioView } from '../crear-usuario/crear-usuario.view'
 import { EditarUsuarioView } from '../editar-usuario/editar-usuario.view'
 import { VerUsuarioView } from '../ver-usuario/ver-usuario.view'
 
+
 export default function AppRouter() {
   return (
-    <Router>
-      <Switch>
-        <Route path="/home" component={HomePage} />
+    <Switch>
+      <Route path="/home" component={HomePage} />
 
-        <Route path="/login" component={Login} />
+      <Route path="/login" component={Login} />
 
-        <Route path="/lista-productos" component={ListaProductosView} />
+      <Route path="/lista-productos" component={ListaProductosView} />
 
-        <Route path="/crear-producto" component={CrearProductoView} />
+      <Route path="/crear-producto" component={CrearProductoView} />
 
-        <Route path="/editar-producto/:id" component={EditarProductoView} />
+      <Route path="/editar-producto/:id" component={EditarProductoView} />
 
-        <Route path="/ver-producto/:id" component={VerProductoView} />
+      <Route path="/ver-producto/:id" component={VerProductoView} />
 
-        <Route path="/lista-usuarios" component={ListaUsuariosView} />
+      <Route path="/lista-usuarios" component={ListaUsuariosView} />
 
-        <Route path="/crear-usuario" component={CrearUsuarioView} />
+      <Route path="/crear-usuario" component={CrearUsuarioView} />
 
-        <Route path="/editar-usuario/:id" component={EditarUsuarioView} />
+      <Route path="/editar-usuario/:id" component={EditarUsuarioView} />
 
-        <Route path="/ver-usuario/:id" component={VerUsuarioView} />
+      <Route path="/ver-usuario/:id" component={VerUsuarioView} />
 
-        <Route path="/" component={Login} />
-      </Switch>
-    </Router >
+      <Route path="/" component={Login} />
+    </Switch>
   )
 }
