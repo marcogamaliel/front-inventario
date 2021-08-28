@@ -9,12 +9,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.container h1 {
-  font-size: 3rem;
-  font-weight: 600;
-  margin: 2rem 0 2rem 0;
-}
-
 .progress {
   margin: -2px 0 !important;
 }
@@ -29,6 +23,12 @@ code {
   color: white;
 }
 
+.peanut-white.btn {
+  border: 1px solid #A739FD;
+  background-color: white;
+  color: #A739FD;
+}
+
 nav, main, footer {
   padding-left: 300px;
 }
@@ -37,9 +37,29 @@ nav, main, footer {
   width: 90% !important;
 }
 
+.container h1 {
+  font-size: 3rem;
+  font-weight: 600;
+  margin: 2rem 0 2rem 0;
+}
+
+.container h2 {
+  font-size: 2.2rem;
+}
+
 .container a{
   color: #A739FD;
   font-weight: 600;
+}
+
+.title-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title-wrapper .tools a, .title-wrapper .tools button {
+  margin-left: 10px;
 }
 
 @media screen and (max-width: 893px){

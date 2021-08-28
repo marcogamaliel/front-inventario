@@ -1,11 +1,11 @@
 const data = [
   {
     id: '1',
-    tag: 'Laptops', // select
-    name: 'mac intel 8GB',
+    tag: 'Laptop', // select
+    name: 'Mac intel 8GB',
     serialNumber: '1259018724098',
     acquisitionDate: '2020-12-01',
-    supplier: 'mac-online',
+    supplier: 'Mac-online',
     invoice: '1255',
     warrantyExpirationDate: '2021-12-01',
     value: {
@@ -23,7 +23,7 @@ const data = [
   {
     id: '2',
     tag: 'laptop',
-    name: 'mac intel 8GB',
+    name: 'Mac intel 8GB',
     serialNumber: '1259018724098',
     acquisitionDate: '2020-12-01',
     supplier: 'mac-online',

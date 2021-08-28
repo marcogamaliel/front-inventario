@@ -1,11 +1,11 @@
 const data = [
   {
     id: '1',
-    name: 'Laptops',
+    name: 'Laptop',
   },
   {
     id: '2',
-    name: 'Periféricos',
+    name: 'Periférico',
   },
 ]
 

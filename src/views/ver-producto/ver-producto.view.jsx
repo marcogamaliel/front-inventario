@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react"
+import "./ver-producto.view.css"
 import { useParams } from 'react-router-dom'
-import Breadcrumbs from "../../components/breadcrumbs/breadcrumbs.component"
+import { Link } from 'react-router-dom'
 import ProductRepository from "../../repositories/product/product-repository"
-import Loader from "../../components/loader/loader.component"
 import EventRepository from "../../repositories/event/event.repository"
-import { EventWidget } from "../../components/event-widget/event-widget.component"
 import QrCodeRepository from "../../repositories/qr-code/qr-code.repository"
+import Breadcrumbs from "../../components/breadcrumbs/breadcrumbs.component"
+import Loader from "../../components/loader/loader.component"
+import DetailData from "../../components/detail-data/detail-data.component"
+import { EventWidget } from "../../components/event-widget/event-widget.component"
 
 export function VerProductoView() {
   const { id } = useParams()
@@ -34,31 +37,55 @@ export function VerProductoView() {
 
   const userName = `${product.user?.firstName ?? ''}${product.user?.lastName ? ` ${product.user.lastName}` : ''}`
 
-  return (
-    <div>
-      <Breadcrumbs pages={pages} />
-      <Loader isLoading={loader > 0} />
-      <h1>Detalle Producto {product.name}</h1>
+  const detailData = [
+    [<b>Id: </b>, product.id],
+    [<b>Fecha de adquisicón: </b>, product.acquisitionDate],
+    [<b>Proveedor: </b>, product.supplier],
+    [<b>Factura: </b>, product.invoice],
+    [<b>Fecha expiración garantía: </b>, product.warrantyExpirationDate],
+    [<b>Costo: </b>, product.value?.amount],
+    [<b>Usuario: </b>, userName],
+    [<b>Fecha de asignación: </b>, product.assignmentDate],
+    [<b>Condición: </b>, product.condition?.name],
+  ]
 
-      <img src={qr?.qrCode} alt={product.name} />
+  return (
+    <div className="container">
+      <Loader isLoading={loader > 0} />
+      <Breadcrumbs pages={pages} />
+      <div className="title-wrapper">
+        <h1>Detalle {product?.tag ?? 'Producto'}</h1>
+
+        <div className="tools">
+          <Link to={`/editar-producto/${product?.id}`} className="btn waves-effect waves-light peanut-white">
+            <i class="material-icons right">edit</i>
+            Editar
+          </Link>
+          <button className="btn peanut">
+            <i class="material-icons right">file_download</i>
+            Descargar PDF
+          </button>
+        </div>
+      </div>
+
+      <div className="row principal-detail-product">
+        <div className="col s5 m3">
+          <img src={qr?.qrCode} alt={product.name} />
+          <Link to="#descargar-qr" className="descargar-qr">
+            <i class="material-icons right">file_download</i>
+            Descargar QR
+          </Link>
+        </div>
+        <div className="col s7 m9">
+          <h2>{product.name}</h2>
+          <div className="product-serial-number">{product.serialNumber}</div>
+          <div>{product.state?.name}</div>
+        </div>
+      </div>
 
       <a href="https://wa.me/56948452530/?text=hola">whatsapp</a>
 
-      <ul>
-        <li><b>Id: </b>{product.id}</li>
-        <li><b>Nombre: </b>{product.name}</li>
-        <li><b>Tag: </b>{product.tag}</li>
-        <li><b>Número de serie: </b>{product.serialNumber}</li>
-        <li><b>Fecha de adquisicón: </b>{product.acquisitionDate}</li>
-        <li><b>Proveedor: </b>{product.supplier}</li>
-        <li><b>Factura: </b>{product.invoice}</li>
-        <li><b>Fecha expiración garantía: </b>{product.warrantyExpirationDate}</li>
-        <li><b>Costo: </b>{product.value?.amount}</li>
-        <li><b>Usuario: </b>{userName}</li>
-        <li><b>Fecha de asignación: </b>{product.assignmentDate}</li>
-        <li><b>Condición: </b>{product.condition?.name}</li>
-        <li><b>Estado: </b>{product.state?.name}</li>
-      </ul>
+      <DetailData data={detailData}></DetailData>
       <EventWidget events={events}></EventWidget>
     </div>
   )
