@@ -27,10 +27,18 @@ export function ListaUsuariosView() {
   }, [])
   return (
     <div>
-      <Breadcrumbs pages={pages} />
       <Loader isLoading={loader > 0} />
+      <Breadcrumbs pages={pages} />
       <div className="container">
-        <h1>Lista de usuarios</h1>
+        <div className="title-wrapper">
+          <h1>Lista de usuarios</h1>
+          <div className="tools">
+            <Link to="/crear-usuario" className="btn waves-effect waves-light peanut">
+              <i className="material-icons right">add</i>
+              Crear nuevo
+            </Link>
+          </div>
+        </div>
         <Table headers={headers} data={data}></Table>
       </div>
     </div>

@@ -7,6 +7,7 @@ export async function login(username, password, saveToken) {
   
   const { user, token } = result
   await saveToken(user, token)
+
   return !!user
 }
 
