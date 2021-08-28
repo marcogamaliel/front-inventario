@@ -5,6 +5,7 @@ import { useEffect, useState } from "react"
 import TagRepository from "../../../repositories/tag/tag.repository"
 import UserRepository from "../../../repositories/user/user.repository"
 import ConditionRepository from "../../../repositories/condition/condition.repository"
+import StateRepository from "../../../repositories/state/state.repository"
 
 export function ProductForm(props) {
   const {
@@ -13,6 +14,7 @@ export function ProductForm(props) {
 
   const [tags, setTags] = useState([])
   const [users, setUsers] = useState([])
+  const [states, setStates] = useState([])
   const [conditions, setConditions] = useState([])
 
   if (props.product) {
@@ -50,6 +52,14 @@ export function ProductForm(props) {
       if (props.product?.condition) {
         const selectedCondition = conditions.find(c => c.name === props.product.condition)?.id ?? 'no'
         setValue('conditions', selectedCondition)
+      }
+    })
+    StateRepository.getAll().then((states) => {
+      setStates(states)
+      M.FormSelect.init(document.querySelectorAll('#product-form-states'))
+      if (props.product?.state) {
+        const selectedState = states.find(state => state.tag === props.product?.state)?.key ?? 'no'
+        setValue('states', selectedState)
       }
     })
   })
@@ -197,7 +207,25 @@ export function ProductForm(props) {
           </span>
         </div>
 
-        <div className="input-field col m6 s12">
+        <div className="input-field col m3 s12">
+          <label className="active">Estado</label>
+          <select
+            name="states"
+            id="product-form-states"
+            className={errors?.states ? 'invalid' : 'valid'}
+            {...register("states", {})}
+          >
+            <option value="no">Selecciona el estado</option>
+            {states.map((state) => (
+              <option value={state.key} key={`tag-${state.key}`}>{state.tag}</option>
+            ))}
+          </select>
+          <span className="brown-text">
+            {errors?.states?.message}
+          </span>
+        </div>
+
+        <div className="input-field col m3 s12">
           <label htmlFor="invoice" className={product?.invoice && 'active'}>Número de Factura</label>
           <input
             id="invoice"
@@ -267,10 +295,8 @@ export function ProductForm(props) {
             {errors?.users?.message}
           </span>
         </div>
-      </div>
 
-      <div className="row">
-        <div className="input-field col m4 s12">
+        <div className="input-field col m3 s12">
           <label htmlFor="assignmentDate" className={product?.assignmentDate && 'active'}>Fecha de assignación</label>
           <input
             id="assignmentDate"
@@ -285,9 +311,9 @@ export function ProductForm(props) {
         </div>
       </div>
 
-      <div className="right">
-        {cancelUrl && <Link to={cancelUrl} className="btn waves-effect waves-light amber">Cancelar</Link>}
-        <button className="btn waves-effect waves-light green" type="submit">
+      <div className="form-actions">
+        {cancelUrl && <Link to={cancelUrl} className="btn waves-effect waves-light peanut-white">Cancelar</Link>}
+        <button className="btn waves-effect waves-light peanut" type="submit" style={{ marginLeft: '20px' }}>
           {acceptLabel || "Aceptar"}
           <i className="material-icons right">send</i>
         </button>

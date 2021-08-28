@@ -58,11 +58,11 @@ export function VerProductoView() {
 
         <div className="tools">
           <Link to={`/editar-producto/${product?.id}`} className="btn waves-effect waves-light peanut-white">
-            <i class="material-icons right">edit</i>
+            <i className="material-icons right">edit</i>
             Editar
           </Link>
           <button className="btn peanut">
-            <i class="material-icons right">file_download</i>
+            <i className="material-icons right">file_download</i>
             Descargar PDF
           </button>
         </div>
@@ -72,7 +72,7 @@ export function VerProductoView() {
         <div className="col s5 m3">
           <img src={qr?.qrCode} alt={product.name} />
           <Link to="#descargar-qr" className="descargar-qr">
-            <i class="material-icons right">file_download</i>
+            <i className="material-icons right">file_download</i>
             Descargar QR
           </Link>
         </div>

@@ -36,7 +36,7 @@ export function ListaProductosView() {
           <h1>Lista de productos</h1>
           <div className="tools">
             <Link to="/crear-producto" className="btn waves-effect waves-light peanut">
-              <i class="material-icons right">add</i>
+              <i className="material-icons right">add</i>
               Crear nuevo
             </Link>
           </div>

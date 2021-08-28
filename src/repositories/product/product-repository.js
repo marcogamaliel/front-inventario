@@ -18,7 +18,7 @@ const data = [
     },
     assignmentDate: '2020-12-01',
     condition: 'new', // select
-    state: 'assigned'
+    state: 'Asignado'
   },
   {
     id: '2',
