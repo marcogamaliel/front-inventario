@@ -11,6 +11,12 @@ body {
 
 .container h1 {
   font-size: 3rem;
+  font-weight: 600;
+  margin: 2rem 0 2rem 0;
+}
+
+.progress {
+  margin: -2px 0 !important;
 }
 
 code {
@@ -20,6 +26,7 @@ code {
 
 .peanut.btn {
   background-color: #A739FD;
+  color: white;
 }
 
 nav, main, footer {
@@ -28,6 +35,11 @@ nav, main, footer {
 
 .container {
   width: 90% !important;
+}
+
+.container a{
+  color: #A739FD;
+  font-weight: 600;
 }
 
 @media screen and (max-width: 893px){

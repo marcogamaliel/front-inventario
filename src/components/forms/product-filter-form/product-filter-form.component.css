@@ -1,0 +1,9 @@
+form.product-filter-form .row{
+  border: 1px solid #CCCCCC;
+  border-radius: 10px;
+  padding: 10px 30px;
+}
+
+form.product-filter-form .row button{
+  margin-top: 30px;
+}
