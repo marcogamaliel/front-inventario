@@ -1,17 +1,12 @@
-const data = [
-  {
-    id: '1',
-    name: 'Falabella',
-  },
-  {
-    id: '2',
-    name: 'Bice',
-  }
-]
+import axios from 'axios'
+
+const { REACT_APP__SERVICE__PAYREPORT__URL: baseUrl } = process.env
 
 const ClientRepository = {
-  getAll: () => {
-    return new Promise((resolve) => setTimeout(() => resolve(data), 500))
+  getAll: async () => {
+    const { data: result } = await axios.get(`${baseUrl}/v1/clients`)
+
+    return new Promise((resolve) => setTimeout(() => resolve(result), 500))
   }
 }
 

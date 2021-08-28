@@ -1,61 +1,21 @@
-const data = [
-  {
-    executorId: '1',
-    productId: '1',
-    userId: '1',
-    date: '2021-02-12',
-    description: 'Se asignó un equipo',
-    type: 'assign',
-  },
-  {
-    executorId: '1',
-    productId: '1',
-    userId: '1',
-    date: '2021-02-12',
-    description: 'Se asignó un equipo',
-    type: 'assign',
-  },
-  {
-    executorId: '1',
-    productId: '2',
-    userId: '1',
-    date: '2021-02-12',
-    description: 'Se asignó un equipo',
-    type: 'assign',
-  },
-  {
-    executorId: '1',
-    productId: '2',
-    userId: '1',
-    date: '2021-03-12',
-    description: 'Se quitó el equipo',
-    type: 'desasignar',
-  },
-  {
-    executorId: '1',
-    productId: '2',
-    userId: '2',
-    date: '2021-03-21',
-    description: 'Se asignó un equipo',
-    type: 'assign',
-  },
-  {
-    executorId: '2',
-    productId: '1',
-    userId: '2',
-    date: '2021-02-12',
-    description: 'Se lleva el equipo a reparaciones',
-    type: 'repair',
-  },
-]
+import axios from 'axios'
+
+const { REACT_APP__SERVICE__PAYREPORT__URL: baseUrl } = process.env
 
 const EventRepository = {
-  getByUserId: (id) => {
+  getByUserId: async (id) => {
+    const { data } = await axios.get(`${baseUrl}/v1/events`)
+
     const result = data.filter(item => item.userId === id)
+
     return new Promise((resolve) => setTimeout(() => resolve(result), 500))
   },
-  getByProductId: (id) => {
+  
+  getByProductId: async (id) => {
+    const { data } = await axios.get(`${baseUrl}/v1/events`)
+
     const result = data.filter(item => item.productId === id)
+
     return new Promise((resolve) => setTimeout(() => resolve(result), 500))
   }
 }
