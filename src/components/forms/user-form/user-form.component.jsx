@@ -4,6 +4,7 @@ import M from 'materialize-css'
 import { useEffect, useState } from "react"
 import ClientRepository from "../../../repositories/client/client.repository"
 import RoleRepository from "../../../repositories/role/role.repository"
+import PositionRepository from "../../../repositories/position/position.repository"
 
 export function UserForm(props) {
   const {
@@ -12,6 +13,7 @@ export function UserForm(props) {
 
   const [clients, setClients] = useState([])
   const [roles, setRoles] = useState([])
+  const [positions, setPositions] = useState([])
 
   if (props.user) {
     setValue('firstName', props.user.firstName)
@@ -37,6 +39,14 @@ export function UserForm(props) {
         setValue('roles', selectedRoles)
       }
     })
+    PositionRepository.getAll().then((positions) => {
+      setPositions(positions)
+      M.FormSelect.init(document.querySelectorAll('#user-form-positions'))
+      if (props.user?.position) {
+        const selectedPosition = positions.find(p => p.id === props.user.position.id)?.id ?? 'no'
+        setValue('positions', selectedPosition)
+      }
+    })
   })
 
   const { onSubmit, user, cancelUrl, acceptLabel } = props
@@ -56,7 +66,30 @@ export function UserForm(props) {
     <form onSubmit={handleSubmit(onSubmitWrapper)}>
 
       <div className="row">
-        <div className="input-field col m4 s12">
+        <div className="input-field col m3 s12">
+          <label className="active">Tipo de usuario</label>
+          <select
+            name="roles"
+            id="user-form-roles"
+            className={errors?.roles ? 'invalid' : 'valid'}
+            {...register("roles", {
+              required: { value: true, message: 'Se debe seleccionar la categoría' },
+              validate: (value) => value !== 'no' || 'Se debe seleccionar una categoría',
+            })}
+          >
+            <option value="no">Selecciona el rol</option>
+            {roles.map((role) => (
+              <option value={role.key} key={`role-${role.key}`}>{role.name}</option>
+            ))}
+          </select>
+          <span className="brown-text">
+            {errors?.roles?.message}
+          </span>
+        </div>
+      </div>
+
+      <div className="row">
+        <div className="input-field col m6 s12">
           <label htmlFor="firstName" className={user?.firstName && 'active'}>Nombres</label>
           <input
             id="user-form-firstName"
@@ -71,10 +104,8 @@ export function UserForm(props) {
             {errors?.firstName?.message}
           </span>
         </div>
-      </div>
 
-      <div className="row">
-        <div className="input-field col m4 s12">
+        <div className="input-field col m6 s12">
           <label htmlFor="lastName" className={user?.lastName && 'active'}>Apellidos</label>
           <input
             id="user-form-lastName"
@@ -92,7 +123,7 @@ export function UserForm(props) {
       </div>
 
       <div className="row">
-        <div className="input-field col m4 s12">
+        <div className="input-field col m6 s12">
           <label htmlFor="dni" className={user?.dni && 'active'}>Rut</label>
           <input
             id="user-form-dni"
@@ -107,11 +138,9 @@ export function UserForm(props) {
             {errors?.dni?.message}
           </span>
         </div>
-      </div>
 
-      <div className="row">
-        <div className="input-field col m4 s12">
-          <label htmlFor="nickName" className={user?.nickName && 'active'}>Alias</label>
+        <div className="input-field col m6 s12">
+          <label htmlFor="nickName" className={user?.nickName && 'active'}>Nombre de usuario</label>
           <input
             id="user-form-nickName"
             name="nickName"
@@ -146,32 +175,44 @@ export function UserForm(props) {
             {errors?.clients?.message}
           </span>
         </div>
-      </div>
 
-      <div className="row">
-        <div className="input-field col m6 s12">
-          <label className="active">Roles</label>
+        <div className="input-field col m3 s12">
+          <label htmlFor="startingDate" className={user?.startingDate && 'active'}>Fecha de ingreso</label>
+          <input
+            id="user-form-startingDate"
+            name="startingDate"
+            type="text"
+            className={errors?.startingDate ? 'invalid' : 'valid'}
+            {...register('startingDate')}
+          />
+          <span className="brown-text">
+            {errors?.startingDate?.message}
+          </span>
+        </div>
+
+        <div className="input-field col m3 s12">
+          <label className="active">Position</label>
           <select
-            name="roles"
-            id="user-form-roles"
-            className={errors?.roles ? 'invalid' : 'valid'}
-            {...register("roles", {
+            name="positions"
+            id="user-form-positions"
+            className={errors?.positions ? 'invalid' : 'valid'}
+            {...register("positions", {
               required: { value: true, message: 'Se debe seleccionar la categoría' },
               validate: (value) => value !== 'no' || 'Se debe seleccionar una categoría',
             })}
           >
             <option value="no">Selecciona el rol</option>
-            {roles.map((role) => (
-              <option value={role.key} key={`role-${role.key}`}>{role.name}</option>
+            {positions.map((position) => (
+              <option value={position.id} key={`position-${position.id}`}>{position.name}</option>
             ))}
           </select>
           <span className="brown-text">
-            {errors?.roles?.message}
+            {errors?.positions?.message}
           </span>
         </div>
       </div>
 
-      <div className="right">
+      <div className="form-actions">
         {cancelUrl && <Link to={cancelUrl} className="btn waves-effect waves-light amber">Cancelar</Link>}
         <button className="btn waves-effect waves-light green" type="submit">
           {acceptLabel || "Aceptar"}
