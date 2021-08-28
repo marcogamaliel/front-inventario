@@ -1,0 +1,9 @@
+.detail-data-component tr {
+  border: none;
+}
+.detail-data-component tr.odd {
+  background-color: rgba(47, 128, 237, 0.1);
+}
+.detail-data-component tr td{
+  padding: 5px;
+}

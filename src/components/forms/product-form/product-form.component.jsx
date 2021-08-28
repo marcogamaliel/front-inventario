@@ -5,6 +5,7 @@ import { useEffect, useState } from "react"
 import TagRepository from "../../../repositories/tag/tag.repository"
 import UserRepository from "../../../repositories/user/user.repository"
 import ConditionRepository from "../../../repositories/condition/condition.repository"
+import StateRepository from "../../../repositories/state/state.repository"
 
 export function ProductForm(props) {
   const {
@@ -13,12 +14,14 @@ export function ProductForm(props) {
 
   const [tags, setTags] = useState([])
   const [users, setUsers] = useState([])
+  const [states, setStates] = useState([])
   const [conditions, setConditions] = useState([])
 
   if (props.product) {
     setValue('name', props.product.name)
     setValue('serialNumber', props.product.serialNumber)
     setValue('acquisitionDate', props.product.acquisitionDate)
+    setValue('model', props.product.model)
     setValue('supplier', props.product.supplier)
     setValue('invoice', props.product.invoice)
     setValue('warrantyExpirationDate', props.product.warrantyExpirationDate)
@@ -51,6 +54,14 @@ export function ProductForm(props) {
         setValue('conditions', selectedCondition)
       }
     })
+    StateRepository.getAll().then((states) => {
+      setStates(states)
+      M.FormSelect.init(document.querySelectorAll('#product-form-states'))
+      if (props.product?.state) {
+        const selectedState = states.find(state => state.tag === props.product?.state)?.key ?? 'no'
+        setValue('states', selectedState)
+      }
+    })
   })
 
   const { onSubmit, product, cancelUrl, acceptLabel } = props
@@ -73,6 +84,22 @@ export function ProductForm(props) {
 
       <div className="row">
         <div className="input-field col m6 s12">
+          <label htmlFor="name" className={product?.name && 'active'}>Nombre Producto</label>
+          <input
+            id="product-form-name"
+            name="name"
+            type="text"
+            className={errors?.name ? 'invalid' : 'valid'}
+            {...register('name', {
+              required: { value: true, message: 'es obligatorio' },
+            })}
+          />
+          <span className="brown-text">
+            {errors?.name?.message}
+          </span>
+        </div>
+
+        <div className="input-field col m3 s12">
           <label className="active">Categoría</label>
           <select
             name="tags"
@@ -92,28 +119,33 @@ export function ProductForm(props) {
             {errors?.tags?.message}
           </span>
         </div>
-      </div>
 
-      <div className="row">
-        <div className="input-field col m4 s12">
-          <label htmlFor="name" className={product?.name && 'active'}>Nombre Producto</label>
-          <input
-            id="product-form-name"
-            name="name"
-            type="text"
-            className={errors?.name ? 'invalid' : 'valid'}
-            {...register('name', {
-              required: { value: true, message: 'es obligatorio' },
+        <div className="input-field col m3 s12">
+          <label className="active">Condición</label>
+          <select
+            name="conditions"
+            id="product-form-conditions"
+            className={errors?.conditions ? 'invalid' : 'valid'}
+            {...register("conditions", {
+              required: { value: true, message: 'Se debe seleccionar la categoría' },
+              validate: (value) => value !== 'no' || 'Se debe seleccionar una categoría',
             })}
-          />
+          >
+            <option value="no">Selecciona la condición</option>
+            {conditions.map((condition) => (
+              <option value={condition.id} key={`condition-${condition.id}`}>
+                {condition.name}
+              </option>
+            ))}
+          </select>
           <span className="brown-text">
-            {errors?.name?.message}
+            {errors?.conditions?.message}
           </span>
         </div>
       </div>
 
       <div className="row">
-        <div className="input-field col m4 s12">
+        <div className="input-field col m6 s12">
           <label htmlFor="serialNumber" className={product?.serialNumber && 'active'}>Número de serie</label>
           <input
             id="serialNumber"
@@ -128,10 +160,8 @@ export function ProductForm(props) {
             {errors?.serialNumber?.message}
           </span>
         </div>
-      </div>
 
-      <div className="row">
-        <div className="input-field col m4 s12">
+        <div className="input-field col m3 s12">
           <label htmlFor="acquisitionDate" className={product?.acquisitionDate && 'active'}>Fecha de Compra</label>
           <input
             id="acquisitionDate"
@@ -146,28 +176,56 @@ export function ProductForm(props) {
             {errors?.acquisitionDate?.message}
           </span>
         </div>
-      </div>
 
-      <div className="row">
-        <div className="input-field col m4 s12">
-          <label htmlFor="supplier" className={product?.supplier && 'active'}>Proveedor</label>
+        <div className="input-field col m3 s12">
+          <label htmlFor="warrantyExpirationDate" className={product?.warrantyExpirationDate && 'active'}>Fecha Garantía</label>
           <input
-            id="supplier"
-            name="supplier"
+            id="warrantyExpirationDate"
+            name="warrantyExpirationDate"
             type="text"
-            className={errors?.supplier ? 'invalid' : 'valid'}
-            {...register('supplier', {
-              required: { value: true, message: 'es obligatorio' },
-            })}
+            className={errors?.warrantyExpirationDate ? 'invalid' : 'valid'}
+            {...register('warrantyExpirationDate')}
           />
           <span className="brown-text">
-            {errors?.supplier?.message}
+            {errors?.warrantyExpirationDate?.message}
           </span>
         </div>
       </div>
 
       <div className="row">
-        <div className="input-field col m4 s12">
+        <div className="input-field col m6 s12">
+          <label htmlFor="model" className={product?.model && 'active'}>Modelo</label>
+          <input
+            id="model"
+            name="model"
+            type="text"
+            className={errors?.model ? 'invalid' : 'valid'}
+            {...register('model', {})}
+          />
+          <span className="brown-text">
+            {errors?.model?.message}
+          </span>
+        </div>
+
+        <div className="input-field col m3 s12">
+          <label className="active">Estado</label>
+          <select
+            name="states"
+            id="product-form-states"
+            className={errors?.states ? 'invalid' : 'valid'}
+            {...register("states", {})}
+          >
+            <option value="no">Selecciona el estado</option>
+            {states.map((state) => (
+              <option value={state.key} key={`tag-${state.key}`}>{state.tag}</option>
+            ))}
+          </select>
+          <span className="brown-text">
+            {errors?.states?.message}
+          </span>
+        </div>
+
+        <div className="input-field col m3 s12">
           <label htmlFor="invoice" className={product?.invoice && 'active'}>Número de Factura</label>
           <input
             id="invoice"
@@ -183,24 +241,8 @@ export function ProductForm(props) {
       </div>
 
       <div className="row">
-        <div className="input-field col m4 s12">
-          <label htmlFor="warrantyExpirationDate" className={product?.warrantyExpirationDate && 'active'}>Fecha expiración Garantía</label>
-          <input
-            id="warrantyExpirationDate"
-            name="warrantyExpirationDate"
-            type="text"
-            className={errors?.warrantyExpirationDate ? 'invalid' : 'valid'}
-            {...register('warrantyExpirationDate')}
-          />
-          <span className="brown-text">
-            {errors?.warrantyExpirationDate?.message}
-          </span>
-        </div>
-      </div>
-
-      <div className="row">
-        <div className="input-field col m4 s12">
-          <label htmlFor="value" className={product?.value && 'active'}>Costo de compra</label>
+        <div className="input-field col m6 s12">
+          <label htmlFor="value" className={product?.value && 'active'}>Valor</label>
           <input
             id="value"
             name="value"
@@ -210,6 +252,22 @@ export function ProductForm(props) {
           />
           <span className="brown-text">
             {errors?.value?.message}
+          </span>
+        </div>
+
+        <div className="input-field col m6 s12">
+          <label htmlFor="supplier" className={product?.supplier && 'active'}>Proveedor</label>
+          <input
+            id="supplier"
+            name="supplier"
+            type="text"
+            className={errors?.supplier ? 'invalid' : 'valid'}
+            {...register('supplier', {
+              required: { value: true, message: 'es obligatorio' },
+            })}
+          />
+          <span className="brown-text">
+            {errors?.supplier?.message}
           </span>
         </div>
       </div>
@@ -237,35 +295,8 @@ export function ProductForm(props) {
             {errors?.users?.message}
           </span>
         </div>
-      </div>
 
-      <div className="row">
-        <div className="input-field col m6 s12">
-          <label className="active">Condición</label>
-          <select
-            name="conditions"
-            id="product-form-conditions"
-            className={errors?.conditions ? 'invalid' : 'valid'}
-            {...register("conditions", {
-              required: { value: true, message: 'Se debe seleccionar la categoría' },
-              validate: (value) => value !== 'no' || 'Se debe seleccionar una categoría',
-            })}
-          >
-            <option value="no">Selecciona la condición</option>
-            {conditions.map((condition) => (
-              <option value={condition.id} key={`condition-${condition.id}`}>
-                {condition.name}
-              </option>
-            ))}
-          </select>
-          <span className="brown-text">
-            {errors?.conditions?.message}
-          </span>
-        </div>
-      </div>
-
-      <div className="row">
-        <div className="input-field col m4 s12">
+        <div className="input-field col m3 s12">
           <label htmlFor="assignmentDate" className={product?.assignmentDate && 'active'}>Fecha de assignación</label>
           <input
             id="assignmentDate"
@@ -280,9 +311,9 @@ export function ProductForm(props) {
         </div>
       </div>
 
-      <div className="right">
-        {cancelUrl && <Link to={cancelUrl} className="btn waves-effect waves-light amber">Cancelar</Link>}
-        <button className="btn waves-effect waves-light green" type="submit">
+      <div className="form-actions">
+        {cancelUrl && <Link to={cancelUrl} className="btn waves-effect waves-light peanut-white">Cancelar</Link>}
+        <button className="btn waves-effect waves-light peanut" type="submit" style={{ marginLeft: '20px' }}>
           {acceptLabel || "Aceptar"}
           <i className="material-icons right">send</i>
         </button>

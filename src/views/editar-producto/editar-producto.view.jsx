@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import "./editar-producto.view.css"
 import { useHistory, useParams } from 'react-router-dom'
 import Breadcrumbs from "../../components/breadcrumbs/breadcrumbs.component"
 import { ProductForm } from "../../components/forms/product-form/product-form.component"
@@ -15,7 +16,9 @@ export function EditarProductoView() {
 
   const onSubmit = (product) => {
     console.log('Se ha guardado', product)
+    setLoader(1)
     ProductRepository.save(product).then(() => {
+      setLoader(loader - 1)
       history.push('/lista-productos')
     })
   }
@@ -29,11 +32,13 @@ export function EditarProductoView() {
   }, [])
 
   return (
-    <div>
-      <Breadcrumbs pages={pages} />
+    <div className="container editar-producto">
       <Loader isLoading={loader > 0} />
+      <Breadcrumbs pages={pages} />
       <h1>Editar Producto</h1>
-      <ProductForm onSubmit={onSubmit} acceptLabel={'Editar Producto'} product={product} cancelUrl="/lista-productos" />
+      <div className="border-wrap">
+        <ProductForm onSubmit={onSubmit} acceptLabel={'Editar Producto'} product={product} cancelUrl="/lista-productos" />
+      </div>
     </div>
   )
 }
