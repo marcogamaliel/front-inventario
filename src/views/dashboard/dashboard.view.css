@@ -1,0 +1,59 @@
+.dashboard-view .border-wrap {
+  padding: 40px;
+}
+
+.dashboard-items {
+  display: flex;
+  justify-content: space-around;
+
+  flex-wrap: wrap;
+}
+
+.dashboard-item {
+  display: flex;
+  height: 100px;
+  color: white;
+  margin-bottom: 20px;
+}
+.principal {
+  width: 100px;
+  background-color: cornflowerblue;
+  padding: 10px;
+  text-align: center;
+}
+
+.dashboard-data span{
+  font-size: 1.6rem;
+}
+
+.principal-name {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+.principal-img i {
+  font-size: 3rem;
+}
+
+.item-down {
+  background-color: #FF5950 !important;
+}
+
+.data-total {
+  background-color: #3273CD;
+  height: 50px;
+  width: 120px;
+  align-items: center;
+    display: flex;
+    padding: 10px;
+    justify-content: space-between;
+}
+
+.data-free {
+  background-color: #77A6E7;
+  height: 50px;
+  align-items: center;
+    display: flex;
+    padding: 10px;
+    justify-content: space-between;
+
+}

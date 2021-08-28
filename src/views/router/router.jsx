@@ -10,12 +10,13 @@ import { ListaUsuariosView } from '../lista-usuarios/lista-usuarios.view'
 import { CrearUsuarioView } from '../crear-usuario/crear-usuario.view'
 import { EditarUsuarioView } from '../editar-usuario/editar-usuario.view'
 import { VerUsuarioView } from '../ver-usuario/ver-usuario.view'
+import { Dashboard } from '../dashboard/dashboard.view'
 
 
 export default function AppRouter() {
   return (
     <Switch>
-      <Route path="/home" component={HomePage} />
+      <Route path="/home" component={Dashboard} />
 
       <Route path="/login" component={Login} />
 
