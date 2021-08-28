@@ -1,72 +1,32 @@
-const data = [
-  {
-    id: '1',
-    tag: 'Laptop', // select
-    name: 'Mac intel 8GB',
-    serialNumber: '1259018724098',
-    acquisitionDate: '2020-12-01',
-    supplier: 'Mac-online',
-    invoice: '1255',
-    warrantyExpirationDate: '2021-12-01',
-    value: {
-      amount: 1500000,
-      currency: 'CLP'
-    },
-    user: { // select
-      name: 'Marco Galindo',
-      id: '11234'
-    },
-    assignmentDate: '2020-12-01',
-    condition: 'new', // select
-    state: 'Asignado'
-  },
-  {
-    id: '2',
-    tag: 'laptop',
-    name: 'Mac intel 8GB',
-    serialNumber: '1259018724098',
-    acquisitionDate: '2020-12-01',
-    supplier: 'mac-online',
-    invoice: '1255',
-    warrantyExpirationDate: '2021-12-01',
-    value: {
-      amount: 1500000,
-      currency: 'CLP'
-    },
-    user: {
-      name: 'Alejandro Melo',
-      id: '11234'
-    },
-    assignmentDate: '2020-12-01',
-    condition: 'new',
-    state: 'assigned'
-  }
-]
+import axios from 'axios'
+
+const { REACT_APP__SERVICE__PAYREPORT__URL: baseUrl } = process.env
 
 const ProductRepository = {
   getAll: async () => {
-    const result = data
+    const { data: result } = await axios.get(`${baseUrl}/v1/products`)
+
     return new Promise((resolve) => {
       setTimeout(() => resolve(result), 500)
     })
   },
   save: async (product) => {
-    if (product.id) {
-      data.splice(+product.id - 1, 1, product)
-    }
-    else { data.push({ ...product, id: (data.length + 1).toString() }) }
-    return new Promise((resolve) => {
-      setTimeout(() => resolve(0), 500)
-    })
-  },
-  getById: async (id) => {
-    const result = data.find(item => item.id === id)
+    const { data: result } = await axios.post(`${baseUrl}/v1/products`)
+
     return new Promise((resolve) => {
       setTimeout(() => resolve(result), 500)
     })
   },
-  getByUserId: (id) => {
-    const result = data.filter(item => item.user?.id === id)
+  getById: async (id) => {
+    const { data: result } = await axios.get(`${baseUrl}/v1/products/${id}`)
+
+    return new Promise((resolve) => {
+      setTimeout(() => resolve(result), 500)
+    })
+  },
+  getByUserId: async (id) => {
+    const { data: result } = await axios.get(`${baseUrl}/v1/users/${id}/products`)
+
     return new Promise((resolve) => {
       setTimeout(() => resolve(result), 500)
     })
