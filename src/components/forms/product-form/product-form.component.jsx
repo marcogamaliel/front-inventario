@@ -62,10 +62,10 @@ export function ProductForm(props) {
         setValue('states', selectedState)
       }
     })
-  })
+  }, [])
 
   const { onSubmit, product, cancelUrl, acceptLabel } = props
-
+  console.log('hola')
   const onSubmitWrapper = (productUploaded) => {
     console.log(productUploaded)
     const fixProduct = {
