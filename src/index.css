@@ -9,8 +9,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.container h1 {
-  font-size: 3rem;
+.progress {
+  margin: -2px 0 !important;
 }
 
 code {
@@ -20,6 +20,13 @@ code {
 
 .peanut.btn {
   background-color: #A739FD;
+  color: white;
+}
+
+.peanut-white.btn {
+  border: 1px solid #A739FD;
+  background-color: white;
+  color: #A739FD;
 }
 
 nav, main, footer {
@@ -28,6 +35,42 @@ nav, main, footer {
 
 .container {
   width: 90% !important;
+  margin-bottom: 150px !important;
+}
+
+.container h1 {
+  font-size: 3rem;
+  font-weight: 600;
+  margin: 2rem 0 2rem 0;
+}
+
+.container h2 {
+  font-size: 2.2rem;
+}
+
+.container a{
+  color: #A739FD;
+  font-weight: 600;
+}
+
+.container .border-wrap {
+  border: 1px solid #CCCCCC;
+  border-radius: 10px;
+}
+
+.title-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title-wrapper .tools a, .title-wrapper .tools button {
+  margin-left: 10px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
 }
 
 @media screen and (max-width: 893px){
