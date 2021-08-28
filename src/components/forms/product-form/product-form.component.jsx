@@ -19,6 +19,7 @@ export function ProductForm(props) {
     setValue('name', props.product.name)
     setValue('serialNumber', props.product.serialNumber)
     setValue('acquisitionDate', props.product.acquisitionDate)
+    setValue('model', props.product.model)
     setValue('supplier', props.product.supplier)
     setValue('invoice', props.product.invoice)
     setValue('warrantyExpirationDate', props.product.warrantyExpirationDate)
@@ -73,6 +74,22 @@ export function ProductForm(props) {
 
       <div className="row">
         <div className="input-field col m6 s12">
+          <label htmlFor="name" className={product?.name && 'active'}>Nombre Producto</label>
+          <input
+            id="product-form-name"
+            name="name"
+            type="text"
+            className={errors?.name ? 'invalid' : 'valid'}
+            {...register('name', {
+              required: { value: true, message: 'es obligatorio' },
+            })}
+          />
+          <span className="brown-text">
+            {errors?.name?.message}
+          </span>
+        </div>
+
+        <div className="input-field col m3 s12">
           <label className="active">Categoría</label>
           <select
             name="tags"
@@ -92,28 +109,33 @@ export function ProductForm(props) {
             {errors?.tags?.message}
           </span>
         </div>
-      </div>
 
-      <div className="row">
-        <div className="input-field col m4 s12">
-          <label htmlFor="name" className={product?.name && 'active'}>Nombre Producto</label>
-          <input
-            id="product-form-name"
-            name="name"
-            type="text"
-            className={errors?.name ? 'invalid' : 'valid'}
-            {...register('name', {
-              required: { value: true, message: 'es obligatorio' },
+        <div className="input-field col m3 s12">
+          <label className="active">Condición</label>
+          <select
+            name="conditions"
+            id="product-form-conditions"
+            className={errors?.conditions ? 'invalid' : 'valid'}
+            {...register("conditions", {
+              required: { value: true, message: 'Se debe seleccionar la categoría' },
+              validate: (value) => value !== 'no' || 'Se debe seleccionar una categoría',
             })}
-          />
+          >
+            <option value="no">Selecciona la condición</option>
+            {conditions.map((condition) => (
+              <option value={condition.id} key={`condition-${condition.id}`}>
+                {condition.name}
+              </option>
+            ))}
+          </select>
           <span className="brown-text">
-            {errors?.name?.message}
+            {errors?.conditions?.message}
           </span>
         </div>
       </div>
 
       <div className="row">
-        <div className="input-field col m4 s12">
+        <div className="input-field col m6 s12">
           <label htmlFor="serialNumber" className={product?.serialNumber && 'active'}>Número de serie</label>
           <input
             id="serialNumber"
@@ -128,10 +150,8 @@ export function ProductForm(props) {
             {errors?.serialNumber?.message}
           </span>
         </div>
-      </div>
 
-      <div className="row">
-        <div className="input-field col m4 s12">
+        <div className="input-field col m3 s12">
           <label htmlFor="acquisitionDate" className={product?.acquisitionDate && 'active'}>Fecha de Compra</label>
           <input
             id="acquisitionDate"
@@ -146,28 +166,38 @@ export function ProductForm(props) {
             {errors?.acquisitionDate?.message}
           </span>
         </div>
-      </div>
 
-      <div className="row">
-        <div className="input-field col m4 s12">
-          <label htmlFor="supplier" className={product?.supplier && 'active'}>Proveedor</label>
+        <div className="input-field col m3 s12">
+          <label htmlFor="warrantyExpirationDate" className={product?.warrantyExpirationDate && 'active'}>Fecha Garantía</label>
           <input
-            id="supplier"
-            name="supplier"
+            id="warrantyExpirationDate"
+            name="warrantyExpirationDate"
             type="text"
-            className={errors?.supplier ? 'invalid' : 'valid'}
-            {...register('supplier', {
-              required: { value: true, message: 'es obligatorio' },
-            })}
+            className={errors?.warrantyExpirationDate ? 'invalid' : 'valid'}
+            {...register('warrantyExpirationDate')}
           />
           <span className="brown-text">
-            {errors?.supplier?.message}
+            {errors?.warrantyExpirationDate?.message}
           </span>
         </div>
       </div>
 
       <div className="row">
-        <div className="input-field col m4 s12">
+        <div className="input-field col m6 s12">
+          <label htmlFor="model" className={product?.model && 'active'}>Modelo</label>
+          <input
+            id="model"
+            name="model"
+            type="text"
+            className={errors?.model ? 'invalid' : 'valid'}
+            {...register('model', {})}
+          />
+          <span className="brown-text">
+            {errors?.model?.message}
+          </span>
+        </div>
+
+        <div className="input-field col m6 s12">
           <label htmlFor="invoice" className={product?.invoice && 'active'}>Número de Factura</label>
           <input
             id="invoice"
@@ -183,24 +213,8 @@ export function ProductForm(props) {
       </div>
 
       <div className="row">
-        <div className="input-field col m4 s12">
-          <label htmlFor="warrantyExpirationDate" className={product?.warrantyExpirationDate && 'active'}>Fecha expiración Garantía</label>
-          <input
-            id="warrantyExpirationDate"
-            name="warrantyExpirationDate"
-            type="text"
-            className={errors?.warrantyExpirationDate ? 'invalid' : 'valid'}
-            {...register('warrantyExpirationDate')}
-          />
-          <span className="brown-text">
-            {errors?.warrantyExpirationDate?.message}
-          </span>
-        </div>
-      </div>
-
-      <div className="row">
-        <div className="input-field col m4 s12">
-          <label htmlFor="value" className={product?.value && 'active'}>Costo de compra</label>
+        <div className="input-field col m6 s12">
+          <label htmlFor="value" className={product?.value && 'active'}>Valor</label>
           <input
             id="value"
             name="value"
@@ -210,6 +224,22 @@ export function ProductForm(props) {
           />
           <span className="brown-text">
             {errors?.value?.message}
+          </span>
+        </div>
+
+        <div className="input-field col m6 s12">
+          <label htmlFor="supplier" className={product?.supplier && 'active'}>Proveedor</label>
+          <input
+            id="supplier"
+            name="supplier"
+            type="text"
+            className={errors?.supplier ? 'invalid' : 'valid'}
+            {...register('supplier', {
+              required: { value: true, message: 'es obligatorio' },
+            })}
+          />
+          <span className="brown-text">
+            {errors?.supplier?.message}
           </span>
         </div>
       </div>
@@ -235,31 +265,6 @@ export function ProductForm(props) {
           </select>
           <span className="brown-text">
             {errors?.users?.message}
-          </span>
-        </div>
-      </div>
-
-      <div className="row">
-        <div className="input-field col m6 s12">
-          <label className="active">Condición</label>
-          <select
-            name="conditions"
-            id="product-form-conditions"
-            className={errors?.conditions ? 'invalid' : 'valid'}
-            {...register("conditions", {
-              required: { value: true, message: 'Se debe seleccionar la categoría' },
-              validate: (value) => value !== 'no' || 'Se debe seleccionar una categoría',
-            })}
-          >
-            <option value="no">Selecciona la condición</option>
-            {conditions.map((condition) => (
-              <option value={condition.id} key={`condition-${condition.id}`}>
-                {condition.name}
-              </option>
-            ))}
-          </select>
-          <span className="brown-text">
-            {errors?.conditions?.message}
           </span>
         </div>
       </div>

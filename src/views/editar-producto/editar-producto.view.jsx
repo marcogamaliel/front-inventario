@@ -29,11 +29,13 @@ export function EditarProductoView() {
   }, [])
 
   return (
-    <div>
-      <Breadcrumbs pages={pages} />
+    <div className="container">
       <Loader isLoading={loader > 0} />
+      <Breadcrumbs pages={pages} />
       <h1>Editar Producto</h1>
-      <ProductForm onSubmit={onSubmit} acceptLabel={'Editar Producto'} product={product} cancelUrl="/lista-productos" />
+      <div className="border-wrap">
+        <ProductForm onSubmit={onSubmit} acceptLabel={'Editar Producto'} product={product} cancelUrl="/lista-productos" />
+      </div>
     </div>
   )
 }
